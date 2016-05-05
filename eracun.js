@@ -225,7 +225,7 @@ streznik.post('/prijava', function(zahteva, odgovor) {
       napaka2 = true;
     }
     console.log(datoteke.sporocilo);
-    odgovor.end();
+    odgovor.redirect('/prijava');
   });
 })
 
