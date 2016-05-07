@@ -94,6 +94,17 @@
           </div>
         </div>
       </div>
-    </div>  
+    </div>
+    <script>
+      $(document).ready(function() {
+        $('#seznamRacunov').click(function() {
+            racun = document.getElementById("seznamRacunov").value;
+        })
+        
+        $.get('/izpisiRacunBaza', function(racun) {
+            racun = document.getElementById("seznamRacunov").value;
+        })
+      });
+    </script>
    </body>
 </html>
