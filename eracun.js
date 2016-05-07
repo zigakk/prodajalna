@@ -151,9 +151,44 @@ var strankaIzRacuna = function(racunId, callback) {
     })
 }
 
+var t_IdRacuna = 0;
+
+var IdRacuna =  function(zahteva, callback) {
+  if (zahteva.session.InvoiceId != undefined)
+  {
+    callback(zahteva.session.InvoiceId);
+  }
+  else
+  {
+    callback(0);
+  }
+}
+
+streznik.get('/p', function(zahteva, odgovor) {
+  //console.log(zahteva);
+})
+
 // Izpis računa v HTML predstavitvi na podlagi podatkov iz baze
 streznik.post('/izpisiRacunBaza', function(zahteva, odgovor) {
-  odgovor.end();
+  pb.all("SELECT Customer.FirstName || ' ' || Customer.LastName || ' (' || Invoice.InvoiceId || ') - ' || date(Invoice.InvoiceDate) AS Naziv, \
+          Invoice.InvoiceId \
+          FROM Customer, Invoice \
+          WHERE Customer.CustomerId = Invoice.CustomerId",
+    function(napaka, vrstice) {
+      for (var i=0; i<vrstice.length; i++)
+      {
+        //console.log(vrstice[i].InvoiceId);
+      }
+      //console.log(test);
+      //console.log(zahteva);
+    }
+  );
+  odgovor.setHeader('content-type', 'text/xml');
+  odgovor.render('eslog', {
+        vizualiziraj: true,
+        postavkeRacuna: []
+  })  
+  //odgovor.end();
 })
 
 // Izpis računa v HTML predstavitvi ali izvorni XML obliki
